@@ -1,0 +1,22 @@
+.Square{
+    width: 120px;
+    height: 120px;
+    background-color: rgba(39, 5, 5, 0.689);
+    border-radius: 5px;
+} 
+.Square:hover{
+    cursor: pointer;
+}
+.not-allowed{
+    cursor: not-allowed !important;
+}
+.circle-won{
+    background: #ba0000bb;
+}
+
+.cross-won{
+    background: #05009dc7;
+}
+.gray-bg{
+    background-color: gray !important;
+}
