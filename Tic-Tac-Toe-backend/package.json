@@ -2,5 +2,16 @@
   "dependencies": {
     "nodemon": "^3.1.4",
     "socket.io": "^4.7.5"
-  }
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build":"npm i"                        
+  },
+  "name": "tic-tac-toe-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
