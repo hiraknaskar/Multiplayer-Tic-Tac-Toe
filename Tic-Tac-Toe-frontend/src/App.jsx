@@ -111,7 +111,7 @@ const App = () => {
   };
 
   socket?.on("opponentLeftMatch", () => {
-    alert(opponentName+ "Left the Match")
+    alert("Opponent Left the Match")
     setFinishetState("opponentLeftMatch");
   });
 
