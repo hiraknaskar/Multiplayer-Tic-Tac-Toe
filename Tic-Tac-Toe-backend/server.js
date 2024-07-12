@@ -1,28 +1,20 @@
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const express = require("express");
 
-const app = express();
-const httpServer = createServer(app);
+const httpServer = createServer();
+const port = process.env.PORT || 3000; // Use environment variable or fallback to 3000
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5174",
+    origin: "http://localhost:5174", // Ensure CORS settings are correct
     methods: ["GET", "POST"]
   }
 });
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).send('OK');
-});
-
-const PORT = process.env.PORT || 3000;
-
-const allUser = {};
+const allUsers = {};
 const allRooms = [];
 
 io.on("connection", (socket) => {
-  allUser[socket.id] = {
+  allUsers[socket.id] = {
     socket: socket,
     online: true,
     playing: false,
@@ -30,13 +22,13 @@ io.on("connection", (socket) => {
   };
 
   socket.on("request_to_play", (data) => {
-    const currentUser = allUser[socket.id];
+    const currentUser = allUsers[socket.id];
     currentUser.playerName = data.playerName;
 
     let opponentPlayer;
 
-    for (const key in allUser) {
-      const user = allUser[key];
+    for (const key in allUsers) {
+      const user = allUsers[key];
       if (user.online && !user.playing && !user.gameFinished && socket.id !== key) {
         opponentPlayer = user;
         break;
@@ -78,7 +70,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", function () {
-    const currentUser = allUser[socket.id];
+    const currentUser = allUsers[socket.id];
     currentUser.online = false;
 
     for (let index = 0; index < allRooms.length; index++) {
@@ -103,6 +95,6 @@ io.on("connection", (socket) => {
   });
 });
 
-httpServer.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+httpServer.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
