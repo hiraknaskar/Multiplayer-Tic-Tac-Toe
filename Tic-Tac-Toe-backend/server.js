@@ -5,7 +5,7 @@ const httpServer = createServer();
 const port = process.env.PORT || 3000; // Use environment variable or fallback to 3000
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5174", // Ensure CORS settings are correct
+    origin: "", // Ensure CORS settings are correct
     methods: ["GET", "POST"]
   }
 });
