@@ -1,11 +1,23 @@
-const { log } = require("console");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const express = require("express");
 
-const httpServer = createServer();
+const app = express();
+const httpServer = createServer(app);
 const io = new Server(httpServer, {
-  cors: "http://localhost:5174/",
+  cors: {
+    origin: "http://localhost:5174",
+    methods: ["GET", "POST"]
+  }
 });
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
+const PORT = process.env.PORT || 3000;
+
 const allUser = {};
 const allRooms = [];
 
@@ -91,4 +103,6 @@ io.on("connection", (socket) => {
   });
 });
 
-httpServer.listen(3000);
+httpServer.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
