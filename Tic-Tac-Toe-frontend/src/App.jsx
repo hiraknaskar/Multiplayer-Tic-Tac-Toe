@@ -135,8 +135,13 @@ const App = () => {
     const username = result.value;
     setplayerName(username);
 
-    const newsocket = io("http://localhost:3000", {
-      autoConnuct: true,
+    const newsocket = io("https://tic-tac-toe-multiplayer-278e.onrender.com", {
+      path: '/socket',
+      transports: ['websocket', 'polling'],
+      reconnection: true,
+      reconnectionAttempts: 5,
+      cert: process.env.NODE_ENV === 'production' ? process.env.SSL_CERT : undefined,
+      key: process.env.NODE_ENV === 'production' ? process.env.SSL_KEY : undefined,
     });
 
     newsocket?.emit("request_to_play", {
