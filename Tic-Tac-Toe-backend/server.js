@@ -4,7 +4,13 @@ const { Server } = require("socket.io");
 
 const httpServer = createServer();
 const io = new Server(httpServer, {
-  cors: "http://localhost:5174/",
+  path:'/socket',
+ 
+  transports: ['websocket','polling'],
+  cors:{
+    origin:'*',
+  },
+  allowEIO3:true,
 });
 const allUser = {};
 const allRooms = [];
